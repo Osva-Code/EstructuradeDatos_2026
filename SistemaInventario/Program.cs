@@ -29,7 +29,7 @@ namespace SistemaInventario
 
             do
             {
-                // ── Menú principal ────────────────────────────────────────
+               // ── Menú principal ────────────────────────────────────────
                 Console.Clear();
                 Console.WriteLine("╔══════════════════════════════════════╗");
                 Console.WriteLine("║     SISTEMA DE INVENTARIO - MENÚ     ║");
@@ -38,6 +38,7 @@ namespace SistemaInventario
                 Console.WriteLine("║ 2. Mostrar todos los productos       ║");
                 Console.WriteLine("║ 3. Salir                             ║");
                 Console.WriteLine("║ 4. Buscar producto por ID            ║");
+                Console.WriteLine("║ 5. Actualizar stock                  ║");
                 Console.WriteLine("╚══════════════════════════════════════╝");
                 Console.Write("\n Selecciona una opción: ");
                 opcion = Console.ReadLine();
@@ -55,6 +56,9 @@ namespace SistemaInventario
                         break;
                     case "4":
                         BuscarProducto(inventario, totalRegistros);
+                        break;
+                    case "5":
+                        ActualizarStock(inventario, totalRegistros);
                         break;
                     default:
                         Console.WriteLine("\n Opción inválida. Presiona Enter para continuar.");
@@ -149,6 +153,42 @@ namespace SistemaInventario
                     Console.WriteLine($" Nombre : {inventario[i].Nombre}");
                     Console.WriteLine($" Precio : ${inventario[i].Precio:F2}");
                     Console.WriteLine($" Stock  : {inventario[i].Stock}");
+                    encontrado = true;
+                    break;
+                }
+            }
+
+            if (!encontrado)
+            {
+                Console.WriteLine("\n [X] Producto no encontrado.");
+            }
+
+            Console.ReadLine();
+        }
+        static void ActualizarStock(Producto[] inventario, int total)
+        {
+            Console.Clear();
+            Console.WriteLine("── ACTUALIZAR STOCK ──\n");
+
+            if (total == 0)
+            {
+                Console.WriteLine(" [!] No hay productos registrados aún.");
+                Console.ReadLine();
+                return;
+            }
+
+            Console.Write(" Ingresa el ID del producto a actualizar: ");
+            int idBuscado = int.Parse(Console.ReadLine());
+            bool encontrado = false;
+
+            for (int i = 0; i < total; i++)
+            {
+                if (inventario[i].ID == idBuscado)
+                {
+                    Console.WriteLine($" Producto actual: {inventario[i].Nombre} | Stock actual: {inventario[i].Stock}");
+                    Console.Write(" Ingresa el nuevo stock: ");
+                    inventario[i].Stock = int.Parse(Console.ReadLine());
+                    Console.WriteLine("\n [✓] Stock actualizado exitosamente.");
                     encontrado = true;
                     break;
                 }
