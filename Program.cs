@@ -54,4 +54,15 @@ class SimuladorHeap
             Console.WriteLine($" [{i}] = {arr[i]}");
         }
     }
+    // Escenario A: Modifica el CONTENIDO del objeto en el Heap
+    static void ModificarElementos(string[] arr)
+    {
+        arr[0] = "MODIFICADO";
+    }
+
+    // Escenario B: Reasigna la variable local a un NUEVO objeto en el Heap (no afecta al original)
+    static void ReasignarArreglo(string[] arr)
+    {
+        arr = new string[] { "NUEVO", "ARREGLO" };
+    }
 }
