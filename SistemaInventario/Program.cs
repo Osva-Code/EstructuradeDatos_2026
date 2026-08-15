@@ -47,9 +47,7 @@ namespace SistemaInventario
                         RegistrarProducto(inventario, ref totalRegistros, CAPACIDAD);
                         break;
                     case "2":
-                        // MostrarProductos(inventario, totalRegistros);
-                        Console.WriteLine("\n [En construcción] Presiona Enter para continuar.");
-                        Console.ReadLine();
+                       MostrarProductos(inventario, totalRegistros);
                         break;
                     case "3":
                         Console.WriteLine("\n Cerrando el sistema... ¡Hasta pronto!");
@@ -90,6 +88,37 @@ namespace SistemaInventario
             // ── Incrementar el contador ───────────────────────────────────
             total++; // Avanza el cursor al siguiente slot disponible
             Console.WriteLine($"\n [✓] Producto registrado exitosamente. Total en inventario: {total}");
+            Console.ReadLine();
+        }
+        static void MostrarProductos(Producto[] inventario, int total)
+        {
+            Console.Clear();
+            Console.WriteLine("── LISTADO COMPLETO DE INVENTARIO ──\n");
+            
+            // ── Verificar si hay productos registrados ────────────────────
+            if (total == 0)
+            {
+                Console.WriteLine(" [!] No hay productos registrados aún.");
+                Console.ReadLine();
+                return;
+            }
+            
+            // ── Encabezado de tabla ───────────────────────────────────────
+            Console.WriteLine($" {"ID",-6} {"Nombre",-20} {"Precio",10} {"Stock",8}");
+            Console.WriteLine($" {new string('-', 48)}");
+            
+            // ── Ciclo de recorrido del arreglo ────────────────────────────
+            for (int i = 0; i < total; i++)
+            {
+                Console.WriteLine(
+                    $" {inventario[i].ID,-6} " +
+                    $"{inventario[i].Nombre,-20} " +
+                    $"${inventario[i].Precio,9:F2} " +
+                    $"{inventario[i].Stock,8}"
+                );
+            }
+            
+            Console.WriteLine($"\n Total de productos: {total}");
             Console.ReadLine();
         }
     }
