@@ -80,21 +80,30 @@ namespace SistemaInventario
                 return;
             }
             
-            // ── Captura de datos del usuario ──────────────────────────────
+            // ── Captura y validación de datos ──────────────────────────────
             Console.Write(" ID del producto : ");
-            inventario[total].ID = int.Parse(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out inventario[total].ID))
+            {
+                Console.Write(" [!] Error: Ingresa un número entero válido.\n ID del producto : ");
+            }
             
             Console.Write(" Nombre : ");
             inventario[total].Nombre = Console.ReadLine();
             
             Console.Write(" Precio unitario : $");
-            inventario[total].Precio = double.Parse(Console.ReadLine());
+            while (!double.TryParse(Console.ReadLine(), out inventario[total].Precio))
+            {
+                Console.Write(" [!] Error: Ingresa un valor decimal válido.\n Precio unitario : $");
+            }
             
             Console.Write(" Stock disponible : ");
-            inventario[total].Stock = int.Parse(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out inventario[total].Stock))
+            {
+                Console.Write(" [!] Error: Ingresa un número entero válido.\n Stock disponible : ");
+            }
             
             // ── Incrementar el contador ───────────────────────────────────
-            total++; // Avanza el cursor al siguiente slot disponible
+            total++; 
             Console.WriteLine($"\n [✓] Producto registrado exitosamente. Total en inventario: {total}");
             Console.ReadLine();
         }
