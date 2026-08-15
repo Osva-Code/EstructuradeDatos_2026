@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace FastCartCore
 {
@@ -64,7 +65,32 @@ namespace FastCartCore
         static void Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-            Console.WriteLine("FastCart Backend Core - Fase 1 Inicializada");
+            Console.WriteLine("FastCart Backend Core - Fase 1 Inicializada\n");
+
+            // Inicializar lote de prueba (mínimo 50, usaremos 500 para un buen benchmark)
+            int totalProductos = 500;
+            Producto[] catalogo = GenerarCatalogo(totalProductos);
+
+            Console.WriteLine($"Total de productos a procesar: {totalProductos}");
+            Console.WriteLine("Catálogo antes de ordenar:");
+            MostrarPrimeros(catalogo, 5);
+
+            // ── Medición de Rendimiento ───────────────────────────────────
+            var sw = new Stopwatch();
+            sw.Start();
+            
+            OrdenamientoService.ShellSort(catalogo);
+            
+            sw.Stop();
+            // ──────────────────────────────────────────────────────────────
+
+            Console.WriteLine("\nCatálogo después de ordenar (Precio DESC, SKU ASC):");
+            MostrarPrimeros(catalogo, 5);
+
+            Console.WriteLine($"\nTiempo de ejecución ShellSort:");
+            Console.WriteLine($" {sw.ElapsedMilliseconds} ms");
+            Console.WriteLine($" {sw.ElapsedTicks} ticks");
+            Console.WriteLine($" {sw.Elapsed.TotalMicroseconds:F2} µs");
         }
 
         // ── Utilidades de Generación y Visualización ──────────────────
