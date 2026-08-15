@@ -4,14 +4,22 @@ class Program
 {
     static void Main(string[] args)
     {
-        // Prueba del modificador 'ref' (muta el valor original en el Stack)
-        int total = 4; // 1. Inicialización obligatoria para usar 'ref'
+        // 1. Prueba del modificador 'ref'
+        int total = 4;
         Console.WriteLine($"Valor inicial en Main (antes de Sumar): {total}");
-        
-        // 2. Llamada usando 'ref' obligatoriamente en ambos lados de la firma
         Operaciones.Sumar(ref total, 6);
-        
-        // 3. Verificamos que el valor mutó directamente en la memoria
         Console.WriteLine($"Valor en Main (después de Sumar con ref): {total}"); 
+        
+        Console.WriteLine(new string('-', 40));
+
+        // 2. Prueba del modificador 'out'
+        int[] datos = { 3, 8, 1, 7, 9, 2 };
+        
+        // Llamada usando 'out' (variables declaradas en línea)
+        Operaciones.AnalizarValores(datos, out double prom, out int max);
+
+        Console.WriteLine($"Arreglo analizado: {{ 3, 8, 1, 7, 9, 2 }}");
+        Console.WriteLine($"Promedio calculado (out): {prom}");
+        Console.WriteLine($"Valor máximo encontrado (out): {max}");
     }
 }
