@@ -1,3 +1,6 @@
 ﻿objeto/
 obj/
 bin/
+**/bin/
+**/obj/
+*.user
