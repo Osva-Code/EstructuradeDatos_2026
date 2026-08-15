@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace SistemaInventario
 {
@@ -27,6 +28,8 @@ namespace SistemaInventario
             int totalRegistros = 0; // Contador de productos registrados
             string opcion;
 
+           CargarInventario(inventario, ref totalRegistros, CAPACIDAD);
+
             do
             {
                // ── Menú principal ────────────────────────────────────────
@@ -52,6 +55,7 @@ namespace SistemaInventario
                         MostrarProductos(inventario, totalRegistros);
                         break;
                     case "3":
+                        GuardarInventario(inventario, totalRegistros);
                         Console.WriteLine("\n Cerrando el sistema... ¡Hasta pronto!");
                         break;
                     case "4":
@@ -209,6 +213,35 @@ namespace SistemaInventario
             }
 
             Console.ReadLine();
+        }
+        static void GuardarInventario(Producto[] inventario, int total)
+        {
+            string[] lineas = new string[total];
+            for (int i = 0; i < total; i++)
+            {
+                // Formato CSV: ID,Nombre,Precio,Stock
+                lineas[i] = $"{inventario[i].ID},{inventario[i].Nombre},{inventario[i].Precio},{inventario[i].Stock}";
+            }
+            File.WriteAllLines("inventario.csv", lineas);
+        }
+
+        static void CargarInventario(Producto[] inventario, ref int total, int capacidad)
+        {
+            if (File.Exists("inventario.csv"))
+            {
+                string[] lineas = File.ReadAllLines("inventario.csv");
+                foreach (string linea in lineas)
+                {
+                    if (total >= capacidad) break;
+                    
+                    string[] datos = linea.Split(',');
+                    inventario[total].ID = int.Parse(datos[0]);
+                    inventario[total].Nombre = datos[1];
+                    inventario[total].Precio = double.Parse(datos[2]);
+                    inventario[total].Stock = int.Parse(datos[3]);
+                    total++;
+                }
+            }
         }
     }
 }
