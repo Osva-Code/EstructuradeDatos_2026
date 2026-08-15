@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "SimuladorHeap",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/practica3-heap/SimuladorHeap/bin/Debug/net10.0/SimuladorHeap.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/practica3-heap/SimuladorHeap",
+            "stopAtEntry": false,
+            "console": "integratedTerminal"
+        }
+    ]
+}
