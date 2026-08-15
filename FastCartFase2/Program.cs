@@ -116,6 +116,28 @@ namespace FastCartFase2
                 anterior = anterior.Siguiente;
             }
         }
+
+        /// <summary>
+        /// Recorre la lista secuencialmente para imprimir sus elementos. Operación O(n).
+        /// </summary>
+        public void MostrarCatalogo()
+        {
+            var actual = _cabeza;
+            Console.WriteLine($" {"SKU",-6} | {"Precio",-10} | {"Stock",-6} | {"Nombre"}");
+            Console.WriteLine($" {new string('-', 45)}");
+            
+            if (actual == null)
+            {
+                Console.WriteLine(" [!] El catálogo está vacío.");
+                return;
+            }
+
+            while (actual != null)
+            {
+                Console.WriteLine($" {actual.Data.SKU,-6} | ${actual.Data.Precio,-9:F2} | {actual.Data.Stock,-6} | {actual.Data.Nombre}");
+                actual = actual.Siguiente;
+            }
+        }
     }
 
     class Program
@@ -123,7 +145,30 @@ namespace FastCartFase2
         static void Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-            Console.WriteLine("FastCart Backend - Fase 2: Arquitectura Dinámica Inicializada");
+            Console.WriteLine("FastCart Backend - Fase 2: Arquitectura Dinámica Inicializada\n");
+
+            InventarioLista catalogoDinamico = new InventarioLista();
+            Random rnd = new Random(98765); // Semilla fija para reproducibilidad
+
+            Console.WriteLine("Insertando 15 productos de forma dinámica...\n");
+            
+            for (int i = 1; i <= 15; i++)
+            {
+                Producto p = new Producto
+                {
+                    SKU = 3000 + i,
+                    Nombre = $"ProdDyn-{i}",
+                    Precio = Math.Round(rnd.NextDouble() * (3500.00 - 50.00) + 50.00, 2),
+                    Stock = rnd.Next(1, 100),
+                    DatosProveedor = new Proveedor { IdProveedor = 1, NombreCorporativo = "GlobalLogistics" }
+                };
+                
+                // Usamos InsertarOrdenado para validar que la lista se auto-ordena por precio ascendente
+                catalogoDinamico.InsertarOrdenado(p);
+            }
+
+            Console.WriteLine("Catálogo Maestro (Lista Enlazada Ordenada por Precio Ascendente):");
+            catalogoDinamico.MostrarCatalogo();
         }
     }
 }
