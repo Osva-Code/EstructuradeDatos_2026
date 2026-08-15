@@ -37,6 +37,7 @@ namespace SistemaInventario
                 Console.WriteLine("║ 1. Registrar producto                ║");
                 Console.WriteLine("║ 2. Mostrar todos los productos       ║");
                 Console.WriteLine("║ 3. Salir                             ║");
+                Console.WriteLine("║ 4. Buscar producto por ID            ║");
                 Console.WriteLine("╚══════════════════════════════════════╝");
                 Console.Write("\n Selecciona una opción: ");
                 opcion = Console.ReadLine();
@@ -47,10 +48,13 @@ namespace SistemaInventario
                         RegistrarProducto(inventario, ref totalRegistros, CAPACIDAD);
                         break;
                     case "2":
-                       MostrarProductos(inventario, totalRegistros);
+                        MostrarProductos(inventario, totalRegistros);
                         break;
                     case "3":
                         Console.WriteLine("\n Cerrando el sistema... ¡Hasta pronto!");
+                        break;
+                    case "4":
+                        BuscarProducto(inventario, totalRegistros);
                         break;
                     default:
                         Console.WriteLine("\n Opción inválida. Presiona Enter para continuar.");
@@ -119,6 +123,42 @@ namespace SistemaInventario
             }
             
             Console.WriteLine($"\n Total de productos: {total}");
+            Console.ReadLine();
+        }
+        static void BuscarProducto(Producto[] inventario, int total)
+        {
+            Console.Clear();
+            Console.WriteLine("── BUSCAR PRODUCTO POR ID ──\n");
+
+            if (total == 0)
+            {
+                Console.WriteLine(" [!] No hay productos registrados aún.");
+                Console.ReadLine();
+                return;
+            }
+
+            Console.Write(" Ingresa el ID a buscar: ");
+            int idBuscado = int.Parse(Console.ReadLine());
+            bool encontrado = false;
+
+            for (int i = 0; i < total; i++)
+            {
+                if (inventario[i].ID == idBuscado)
+                {
+                    Console.WriteLine("\n [✓] Producto encontrado:");
+                    Console.WriteLine($" Nombre : {inventario[i].Nombre}");
+                    Console.WriteLine($" Precio : ${inventario[i].Precio:F2}");
+                    Console.WriteLine($" Stock  : {inventario[i].Stock}");
+                    encontrado = true;
+                    break;
+                }
+            }
+
+            if (!encontrado)
+            {
+                Console.WriteLine("\n [X] Producto no encontrado.");
+            }
+
             Console.ReadLine();
         }
     }
