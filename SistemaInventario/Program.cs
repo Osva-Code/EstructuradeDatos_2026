@@ -44,9 +44,7 @@ namespace SistemaInventario
                 switch (opcion)
                 {
                     case "1":
-                        // RegistrarProducto(inventario, ref totalRegistros, CAPACIDAD);
-                        Console.WriteLine("\n [En construcción] Presiona Enter para continuar.");
-                        Console.ReadLine();
+                        RegistrarProducto(inventario, ref totalRegistros, CAPACIDAD);
                         break;
                     case "2":
                         // MostrarProductos(inventario, totalRegistros);
@@ -62,6 +60,37 @@ namespace SistemaInventario
                         break;
                 }
             } while (opcion != "3");
+        }
+        static void RegistrarProducto(Producto[] inventario, ref int total, int capacidad)
+        {
+            Console.Clear();
+            Console.WriteLine("── REGISTRAR NUEVO PRODUCTO ──\n");
+            
+            // ── Validación de capacidad ───────────────────────────────────
+            if (total >= capacidad)
+            {
+                Console.WriteLine(" [!] El inventario está lleno. No se pueden agregar más productos.");
+                Console.ReadLine();
+                return;
+            }
+            
+            // ── Captura de datos del usuario ──────────────────────────────
+            Console.Write(" ID del producto : ");
+            inventario[total].ID = int.Parse(Console.ReadLine());
+            
+            Console.Write(" Nombre : ");
+            inventario[total].Nombre = Console.ReadLine();
+            
+            Console.Write(" Precio unitario : $");
+            inventario[total].Precio = double.Parse(Console.ReadLine());
+            
+            Console.Write(" Stock disponible : ");
+            inventario[total].Stock = int.Parse(Console.ReadLine());
+            
+            // ── Incrementar el contador ───────────────────────────────────
+            total++; // Avanza el cursor al siguiente slot disponible
+            Console.WriteLine($"\n [✓] Producto registrado exitosamente. Total en inventario: {total}");
+            Console.ReadLine();
         }
     }
 }
